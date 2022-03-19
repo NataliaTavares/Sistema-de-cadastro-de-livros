@@ -36,3 +36,4 @@ yarn-error.log*
 /pages/test.js
 appsettings.json
 appsettings.Development.json
+.vs

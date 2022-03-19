@@ -67,7 +67,7 @@ namespace cadastroLivrosApi.Services
 
         public async Task DeleteLivro(Livro livro)
         {
-            _context.Livros.Add(livro);
+            _context.Livros.Remove(livro);
             await _context.SaveChangesAsync();
         }
 
