@@ -26,6 +26,11 @@ namespace cadastroLivrosApi.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Autor")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
+
                     b.Property<DateTime>("Data")
                         .HasMaxLength(40)
                         .HasColumnType("datetime2");

@@ -16,6 +16,10 @@ namespace cadastroLivrosApi.Models
         public string Nome { get; set; }
 
         [Required]
+        [StringLength(80)]
+        public string Autor { get; set; }
+
+        [Required]
         [StringLength(40)]
         public DateTime Data { get; set; }
 
