@@ -100,7 +100,7 @@ namespace cadastroLivrosApi.Controllers
                 if(livro.Id == id) 
                 {
                     await _livrosService.UpdateLivro(livro);
-                    return Ok($"Aluno com if{id} foi atualizado com sucesso");
+                    return Ok($"Aluno com id:{id} foi atualizado com sucesso");
                 }
                 else
                 {

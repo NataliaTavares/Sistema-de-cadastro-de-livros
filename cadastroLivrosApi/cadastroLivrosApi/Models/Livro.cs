@@ -20,7 +20,7 @@ namespace cadastroLivrosApi.Models
         public string Autor { get; set; }
 
         [Required]
-        [StringLength(40)]
+        [DataType(DataType.Date)]
         public DateTime Data { get; set; }
 
         [Required]
