@@ -17,6 +17,7 @@ function App() {
 
     const [data, setData] = useState([]);
     const [modalIncluir, setModalIncluir] = useState(false);
+    const [modalEditar, setModalEditar] = useState(false);
 
     const [livroSelecionado, setLivroSelecionado] = useState({
         id: "",
@@ -26,8 +27,17 @@ function App() {
         genero: "",
     });
 
+    const selecionarLivro = (livro, opcao) => {
+        setLivroSelecionado(livro);
+        opcao === "Editar" && abrirFecharModalEditar();
+    };
+
     const abrirFecharModalIncluir = () => {
         setModalIncluir(!modalIncluir);
+    };
+
+    const abrirFecharModalEditar = () => {
+        setModalEditar(!modalEditar);
     };
 
     const handleChange = (e) => {
@@ -60,6 +70,27 @@ function App() {
             .then((response) => {
                 setData(data.concat(response.data));
                 abrirFecharModalIncluir();
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    const pedidoPut = async () => {
+        await axios
+            .put(baseUrl + "/" + livroSelecionado.id, livroSelecionado)
+            .then((response) => {
+                var resposta = response.data;
+                var dadosAuxiliar = data;
+                dadosAuxiliar.map((livro) => {
+                    if (livro.id === livroSelecionado.id) {
+                        livro.nome = resposta.nome;
+                        livro.autor = resposta.autor;
+                        livro.data = resposta.data;
+                        livro.genero = resposta.genero;
+                    }
+                });
+                abrirFecharModalEditar();
             })
             .catch((error) => {
                 console.log(error);
@@ -103,13 +134,22 @@ function App() {
                             <td>{livro.autor}</td>
 
                             <td>{moment(livro.data).format("DD/MM/YYYY")}</td>
-                            {/* <td>{livro.data}</td> */}
                             <td>{livro.genero}</td>
                             <td>
-                                <button className="btn btn-primary">
+                                <button
+                                    className="btn btn-primary"
+                                    onClick={() =>
+                                        selecionarLivro(livro, "Editar")
+                                    }
+                                >
                                     Editar
                                 </button>
-                                <button className="btn btn-danger">
+                                <button
+                                    className="btn btn-danger"
+                                    onClick={() =>
+                                        selecionarLivro(livro, "Excluir")
+                                    }
+                                >
                                     Excluir
                                 </button>
                             </td>
@@ -173,6 +213,86 @@ function App() {
                     <button
                         className="btn- btn-danger"
                         onClick={() => abrirFecharModalIncluir()}
+                    >
+                        Cancelar
+                    </button>
+                </ModalFooter>
+            </Modal>
+
+            <Modal isOpen={modalEditar}>
+                <ModalHeader>Editar Livros</ModalHeader>
+
+                <ModalBody>
+                    <div className="form-group">
+                        <label>ID:</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            readOnly
+                            value={livroSelecionado && livroSelecionado.id}
+                        />
+                        <br />
+                        <label>Nome:</label>
+                        <br />
+                        <input
+                            type="text"
+                            className="form-control"
+                            name="nome"
+                            onChange={handleChange}
+                            value={livroSelecionado && livroSelecionado.nome}
+                        />
+                        <br />
+                        <label>Autor: </label>
+                        <br />
+                        <input
+                            type="text"
+                            className="form-control"
+                            name="autor"
+                            onChange={handleChange}
+                            value={livroSelecionado && livroSelecionado.autor}
+                        />
+                        <br />
+                        <label>Data Publicação: </label>
+                        <br />
+                        <input
+                            type="text"
+                            className="form-control"
+                            name="data"
+                            onChange={handleChange}
+                            readOnly
+                            // value={livroSelecionado && livroSelecionado.data}
+                            value={
+                                livroSelecionado &&
+                                moment(livroSelecionado.data).format(
+                                    "DD/MM/YYYY"
+                                )
+                            }
+                        />
+                        <br />
+                        <label>Genero:</label>
+                        <br />
+                        <input
+                            type="text"
+                            className="form-control"
+                            name="genero"
+                            onChange={handleChange}
+                            value={livroSelecionado && livroSelecionado.genero}
+                        />
+                        <br />
+                    </div>
+                </ModalBody>
+
+                <ModalFooter>
+                    <button
+                        className="btn-btb-primary"
+                        onClick={() => pedidoPut()}
+                    >
+                        Editar
+                    </button>
+                    {"   "}
+                    <button
+                        className="btn- btn-danger"
+                        onClick={() => abrirFecharModalEditar()}
                     >
                         Cancelar
                     </button>
