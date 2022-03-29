@@ -16,8 +16,11 @@ function App() {
     const baseUrl = "https://localhost:44313/api/Livros";
 
     const [data, setData] = useState([]);
+    const [updateData, setUpdateData] = useState(true);
+
     const [modalIncluir, setModalIncluir] = useState(false);
     const [modalEditar, setModalEditar] = useState(false);
+    const [modalExcluir, setModalExcluir] = useState(false);
 
     const [livroSelecionado, setLivroSelecionado] = useState({
         id: "",
@@ -29,7 +32,9 @@ function App() {
 
     const selecionarLivro = (livro, opcao) => {
         setLivroSelecionado(livro);
-        opcao === "Editar" && abrirFecharModalEditar();
+        opcao === "Editar"
+            ? abrirFecharModalEditar()
+            : abrirFecharModalExcluir();
     };
 
     const abrirFecharModalIncluir = () => {
@@ -38,6 +43,10 @@ function App() {
 
     const abrirFecharModalEditar = () => {
         setModalEditar(!modalEditar);
+    };
+
+    const abrirFecharModalExcluir = () => {
+        setModalExcluir(!modalExcluir);
     };
 
     const handleChange = (e) => {
@@ -60,15 +69,15 @@ function App() {
     const pedidoPost = async () => {
         delete livroSelecionado.id;
 
-        const dataFormatada = moment(livroSelecionado.data).format(
-            "YYYY-MM-DD"
-        );
+        const dataBrasileira = livroSelecionado.data;
+        const dataAmericana = dataBrasileira.split("/").reverse().join("-");
 
-        livroSelecionado.data = dataFormatada;
+        livroSelecionado.data = dataAmericana;
         await axios
             .post(baseUrl, livroSelecionado)
             .then((response) => {
                 setData(data.concat(response.data));
+                setUpdateData(true);
                 abrirFecharModalIncluir();
             })
             .catch((error) => {
@@ -77,6 +86,9 @@ function App() {
     };
 
     const pedidoPut = async () => {
+        const dataBrasileira = livroSelecionado.data;
+        const dataAmericana = dataBrasileira.split("/").reverse().join("-");
+        livroSelecionado.data = dataAmericana;
         await axios
             .put(baseUrl + "/" + livroSelecionado.id, livroSelecionado)
             .then((response) => {
@@ -86,10 +98,11 @@ function App() {
                     if (livro.id === livroSelecionado.id) {
                         livro.nome = resposta.nome;
                         livro.autor = resposta.autor;
-                        livro.data = resposta.data;
+                        livro.data = dataAmericana;
                         livro.genero = resposta.genero;
                     }
                 });
+                setUpdateData(true);
                 abrirFecharModalEditar();
             })
             .catch((error) => {
@@ -97,9 +110,36 @@ function App() {
             });
     };
 
+    const pedidoDelete = async () => {
+        await axios
+            .delete(baseUrl + "/" + livroSelecionado.id)
+            .then((response) => {
+                setData(data.filter((livro) => livro.id !== response.data));
+                setUpdateData(true);
+                abrirFecharModalExcluir();
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
     useEffect(() => {
-        pedidoGet();
-    });
+        if (updateData) {
+            pedidoGet();
+            setUpdateData(false);
+        }
+    }, [updateData]);
+
+    function ConvertDataAmericana(livroData) {
+        const dataAmericana = livroData;
+        const dataBrasileira = dataAmericana
+            .split("-")
+            .reverse()
+            .join("/")
+            .replace("T00:00:00", "");
+
+        return dataBrasileira;
+    }
 
     return (
         <div className="livro-container">
@@ -232,6 +272,21 @@ function App() {
                             value={livroSelecionado && livroSelecionado.id}
                         />
                         <br />
+                        <label>Data Publicação: </label>
+                        <br />
+                        <input
+                            type="text"
+                            className="form-control"
+                            name="data"
+                            onChange={handleChange}
+                            // readOnly
+                            // value={livroSelecionado && livroSelecionado.data}
+                            value={
+                                livroSelecionado &&
+                                ConvertDataAmericana(livroSelecionado.data)
+                            }
+                        />
+                        <br />
                         <label>Nome:</label>
                         <br />
                         <input
@@ -252,23 +307,7 @@ function App() {
                             value={livroSelecionado && livroSelecionado.autor}
                         />
                         <br />
-                        <label>Data Publicação: </label>
-                        <br />
-                        <input
-                            type="text"
-                            className="form-control"
-                            name="data"
-                            onChange={handleChange}
-                            readOnly
-                            // value={livroSelecionado && livroSelecionado.data}
-                            value={
-                                livroSelecionado &&
-                                moment(livroSelecionado.data).format(
-                                    "DD/MM/YYYY"
-                                )
-                            }
-                        />
-                        <br />
+
                         <label>Genero:</label>
                         <br />
                         <input
@@ -295,6 +334,30 @@ function App() {
                         onClick={() => abrirFecharModalEditar()}
                     >
                         Cancelar
+                    </button>
+                </ModalFooter>
+            </Modal>
+
+            <Modal isOpen={modalExcluir}>
+                <ModalBody>
+                    Confirma a exclusão deste livro:{" "}
+                    {livroSelecionado && livroSelecionado.nome} ?
+                </ModalBody>
+
+                <ModalFooter>
+                    <button
+                        className="btm- btn-danger"
+                        onClick={() => pedidoDelete()}
+                    >
+                        {" "}
+                        Sim{" "}
+                    </button>
+                    <button
+                        className="btm- btn-secondary"
+                        onClick={() => abrirFecharModalExcluir()}
+                    >
+                        {" "}
+                        Não{" "}
                     </button>
                 </ModalFooter>
             </Modal>
