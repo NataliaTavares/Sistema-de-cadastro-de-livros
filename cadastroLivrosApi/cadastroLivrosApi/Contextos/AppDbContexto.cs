@@ -16,5 +16,6 @@ namespace cadastroLivrosApi.Contextos
         }
 
         public DbSet<Livro> Livros { get; set; }
+        public DbSet<Autores> Autores { get; set; }
     }
 }

@@ -19,17 +19,42 @@ namespace cadastroLivrosApi.Migrations
                 .HasAnnotation("ProductVersion", "5.0.15")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("cadastroLivrosApi.Models.Livro", b =>
+            modelBuilder.Entity("AutoresLivro", b =>
+                {
+                    b.Property<int>("AutoresId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LivroId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AutoresId", "LivroId");
+
+                    b.HasIndex("LivroId");
+
+                    b.ToTable("AutoresLivro");
+                });
+
+            modelBuilder.Entity("cadastroLivrosApi.Models.Autores", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Autor")
-                        .IsRequired()
-                        .HasMaxLength(80)
-                        .HasColumnType("nvarchar(80)");
+                    b.Property<string>("Nome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Autores");
+                });
+
+            modelBuilder.Entity("cadastroLivrosApi.Models.Livro", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Data")
                         .HasColumnType("datetime2");
@@ -47,6 +72,21 @@ namespace cadastroLivrosApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Livros");
+                });
+
+            modelBuilder.Entity("AutoresLivro", b =>
+                {
+                    b.HasOne("cadastroLivrosApi.Models.Autores", null)
+                        .WithMany()
+                        .HasForeignKey("AutoresId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("cadastroLivrosApi.Models.Livro", null)
+                        .WithMany()
+                        .HasForeignKey("LivroId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

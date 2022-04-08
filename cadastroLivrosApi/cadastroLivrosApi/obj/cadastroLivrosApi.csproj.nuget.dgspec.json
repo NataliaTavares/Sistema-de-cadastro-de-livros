@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Livraria\\cadastroLivrosApi\\cadastroLivrosApi\\cadastroLivrosApi.csproj": {}
+    "D:\\LivrariaAlterada\\cadastroLivrosApi\\cadastroLivrosApi\\cadastroLivrosApi.csproj": {}
   },
   "projects": {
-    "D:\\Livraria\\cadastroLivrosApi\\cadastroLivrosApi\\cadastroLivrosApi.csproj": {
+    "D:\\LivrariaAlterada\\cadastroLivrosApi\\cadastroLivrosApi\\cadastroLivrosApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Livraria\\cadastroLivrosApi\\cadastroLivrosApi\\cadastroLivrosApi.csproj",
+        "projectUniqueName": "D:\\LivrariaAlterada\\cadastroLivrosApi\\cadastroLivrosApi\\cadastroLivrosApi.csproj",
         "projectName": "cadastroLivrosApi",
-        "projectPath": "D:\\Livraria\\cadastroLivrosApi\\cadastroLivrosApi\\cadastroLivrosApi.csproj",
+        "projectPath": "D:\\LivrariaAlterada\\cadastroLivrosApi\\cadastroLivrosApi\\cadastroLivrosApi.csproj",
         "packagesPath": "C:\\Users\\Natal\\.nuget\\packages\\",
-        "outputPath": "D:\\Livraria\\cadastroLivrosApi\\cadastroLivrosApi\\obj\\",
+        "outputPath": "D:\\LivrariaAlterada\\cadastroLivrosApi\\cadastroLivrosApi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -44,6 +44,14 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[11.0.1, )"
+            },
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[11.0.0, )"
+            },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[5.0.15, )"
@@ -77,7 +85,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.406\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,4 +1,7 @@
+using AutoMapper;
+using cadastroLivrosApi.Configuration;
 using cadastroLivrosApi.Contextos;
+using cadastroLivrosApi.Repositorio;
 using cadastroLivrosApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -35,11 +38,24 @@ namespace cadastroLivrosApi
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<ILivrosService, LivrosService>();
-            
+            services.AddScoped<ILivroRepository, LivroRepository>();
+            services.AddScoped<IAutoresService, AutoresService>();
+            services.AddScoped<IAutoresRepository, AutoresRepository>();
+
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "cadastroLivrosApi", Version = "v1" });
             });
+
+            services.AddControllers();
+
+            services.AddAutoMapperConfiguration();
+
+            services.AddDependencyInjectionConfiguration();
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

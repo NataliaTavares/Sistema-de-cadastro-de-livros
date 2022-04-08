@@ -15,9 +15,6 @@ namespace cadastroLivrosApi.Models
         [StringLength(80)]
         public string Nome { get; set; }
 
-        [Required]
-        [StringLength(80)]
-        public string Autor { get; set; }
 
         [Required]
         [DataType(DataType.Date)]
@@ -26,8 +23,14 @@ namespace cadastroLivrosApi.Models
         [Required]
         [StringLength(80)]
         public string Genero { get; set; }
-        
-        
+
+
+        public ICollection<Autores> Autores { get; set; }
+
+        public Livro()
+        {
+            Autores = new HashSet<Autores>();
+        }
 
     }
 }

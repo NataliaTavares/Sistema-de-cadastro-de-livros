@@ -1,23 +1,20 @@
-﻿using cadastroLivrosApi.Models;
-using System;
+﻿using cadastroLivrosApi.Models.ModelView.Livro;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace cadastroLivrosApi.Services
 {
     public interface ILivrosService
     {
-        Task<IEnumerable<Livro>> GetLivros();
+        Task DeleteLivroAsync(int id);
 
-        Task<Livro> GetLivro(int id);
+        Task<LivroView> GetLivroAsync(int id);
 
-        Task<IEnumerable<Livro>> GetLivrosByNome(string nome);
+        Task<IEnumerable<LivroView>> GetLivrosAsync();
 
-        Task CreateLivro(Livro livro);
+        Task<LivroView> InsertLivroAsync(NovoLivro novoLivro);
 
-        Task UpdateLivro(Livro livro);
+        Task<LivroView> UpdateLivroAsync(AlteraLivro alteraLivro);
 
-        Task DeleteLivro(Livro livro);
     }
 }

@@ -1,4 +1,6 @@
 ﻿using cadastroLivrosApi.Models;
+using cadastroLivrosApi.Models.ModelView.Erro;
+using cadastroLivrosApi.Models.ModelView.Livro;
 using cadastroLivrosApi.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,131 +15,86 @@ namespace cadastroLivrosApi.Controllers
     [ApiController]
     public class LivrosController : ControllerBase
     {
-        private ILivrosService _livrosService;
+        private readonly ILivrosService manager;
 
-        public LivrosController(ILivrosService livrosService)
+        public LivrosController(ILivrosService manager)
         {
-            _livrosService = livrosService;
+            this.manager = manager;
         }
 
+        /// <summary>
+        /// Retorna todos os livros.
+        /// </summary>
         [HttpGet]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-       //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-
-        public async Task<ActionResult<IAsyncEnumerable<Livro>>> GetLivros()
+        [ProducesResponseType(typeof(IEnumerable<LivroView>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Get()
         {
-            try
-            {
-                var livros = await _livrosService.GetLivros();
-                return Ok(livros);
-            }
-            catch
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao obter livros");
-            }
+            return Ok(await manager.GetLivrosAsync());
+        }
+
+        /// <summary>
+        /// Retorna um livro consultado via ID
+        /// </summary>
+        /// <param name="id" example="123">Id do livro</param>
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(LivroView), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Get(int id)
+        {
+            return Ok(await manager.GetLivroAsync(id));
         }
 
 
-        [HttpGet ("LivroPorNome")]
-        public async Task<ActionResult<IAsyncEnumerable<Livro>>> 
-            GetLivrosByName([FromQuery] string nome)
-        {
-            try
-            {
-                var livros = await _livrosService.GetLivrosByNome(nome);
-
-                if (livros.Count() == 0)
-                   return NotFound($"Não exixtem os livros com o critério {nome}");
-
-                return Ok(livros);
-            }
-            catch
-            {
-                return BadRequest("Request inválido");
-            }
-        }
-
-
-        [HttpGet("{id:int}", Name = "GetLivro")]
-
-        public async Task<ActionResult<Livro>> GetLivro(int id)
-        {
-            try
-            {
-                var livro = await _livrosService.GetLivro(id);
-
-                if (livro == null)
-                    return NotFound($"Não exixte o livro com o id={id}");
-
-                return Ok(livro);
-            }
-            catch
-            {
-                return BadRequest("Request inválido");
-            }
-        }
-
+        /// <summary>
+        /// Insere um novo livro.
+        /// </summary>
+        /// <param name="livro"></param>
         [HttpPost]
-
-        public async Task<ActionResult> Create(Livro livro)
+        [ProducesResponseType(typeof(LivroView), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Post(NovoLivro livro)
         {
-            try
-            {
-                await _livrosService.CreateLivro(livro);
-                return CreatedAtRoute(nameof(GetLivro), new { id = livro.Id }, livro);
-            }
-            catch
-            {
-                return BadRequest("Request inválido");
-            }
+            var livroInserido = await manager.InsertLivroAsync(livro);
+            return CreatedAtAction(nameof(Get), new { id = livroInserido.Id }, livroInserido);
         }
 
-        [HttpPut ("{id:int}")]
-        public async Task<ActionResult> Edit(int id, [FromBody] Livro livro)
+
+        /// <summary>
+        /// Altera um livro
+        /// </summary>
+        [HttpPut]
+        [ProducesResponseType(typeof(LivroView), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Put(AlteraLivro livro)
         {
-            try
+            var livroAtualizado = await manager.UpdateLivroAsync(livro);
+            if (livroAtualizado == null)
             {
-                if(livro.Id == id) 
-                {
-                    await _livrosService.UpdateLivro(livro);
-                    return Ok($"Aluno com id:{id} foi atualizado com sucesso");
-                }
-                else
-                {
-                    return BadRequest("Dados inconcistentes");
-                }
+                return NotFound();
             }
-            catch
-            {
-                return BadRequest("Request inválido");
-            }
+            return Ok(livroAtualizado);
         }
 
-        [HttpDelete("{id:int}")]
-        public async Task<ActionResult> Delete(int id)
+
+
+        /// <summary>
+        /// Exclui um livro.
+        /// </summary>
+        /// <param name="id" example="123">Id do livro</param>
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> DeleteAsync(int id)
         {
-            try
-            {
-                
-                var livro = await _livrosService.GetLivro(id);
-                
+            await manager.DeleteLivroAsync(id);
+            return NoContent();
 
-                if (livro != null)
-                {
-                    await _livrosService.DeleteLivro(livro);
 
-                    return Ok($"Livro de id:{id} foi excluído com sucesso");
-                    //return Ok($"Vamos la");
-                }
-                else
-                {
-                    return NotFound($"Livro com id={id} não encontrado");
-                }
-            }
-            catch
-            {
-                return BadRequest("Request inválido temos uma problema");
-            }
+
         }
     }
 }

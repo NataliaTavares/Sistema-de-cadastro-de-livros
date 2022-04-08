@@ -1,75 +1,61 @@
-﻿using cadastroLivrosApi.Contextos;
-using cadastroLivrosApi.Models;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using cadastroLivrosApi.Models;
 using System.Threading.Tasks;
+using AutoMapper;
+using cadastroLivrosApi.Models.ModelView.Livro;
+using System.Collections.Generic;
 
 namespace cadastroLivrosApi.Services
 {
-    public class LivrosService : ILivrosService
+    public class LivrosService: ILivrosService
     {
-        private readonly AppDbContexto _context;
+        
 
-        public LivrosService(AppDbContexto context)
+        private readonly ILivroRepository repository;
+        private readonly IMapper mapper;
+
+
+        public LivrosService(ILivroRepository repository, IMapper mapper)
         {
-            _context = context;
-        }
-
-        public async Task<IEnumerable<Livro>> GetLivros()
-        {
-            try
-            {
-                return await _context.Livros.ToListAsync();
-            }
-            catch
-            {
-                throw;
-            }
-
-        }
-
-        public async Task<IEnumerable<Livro>> GetLivrosByNome(string nome)
-        {
-            IEnumerable<Livro> livros;
-
-            if (!string.IsNullOrWhiteSpace(nome))
-            {
-                livros = await _context.Livros.Where(n => n.Nome.Contains(nome)).ToListAsync();
-            }
-            else
-            {
-                livros = await GetLivros();
-            }
-            return livros;  
+            this.repository = repository;
+            this.mapper = mapper;
         }
 
 
-        public async Task<Livro> GetLivro(int id)
+
+        public async Task<IEnumerable<LivroView>> GetLivrosAsync()
         {
-            var livro = await _context.Livros.FindAsync(id);
-            return livro;
+            return mapper.Map<IEnumerable<Livro>, IEnumerable<LivroView>>(await repository.GetLivrosAsync());
         }
 
-        public async Task CreateLivro(Livro livro)
+
+        public async Task<LivroView> GetLivroAsync(int id)
         {
-            _context.Livros.Add(livro);
-            await _context.SaveChangesAsync();
+            return mapper.Map<LivroView>(await repository.GetLivroAsync(id));
         }
 
-        public async Task UpdateLivro(Livro livro)
+
+        public async Task<LivroView> InsertLivroAsync(NovoLivro novoLivro)
         {
-            _context.Entry(livro).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-            
+            var livro = mapper.Map<Livro>(novoLivro);
+            return mapper.Map<LivroView>(await repository.InsertLivroAsync(livro));
         }
 
-        public async Task DeleteLivro(Livro livro)
+
+        public async Task<LivroView> UpdateLivroAsync(AlteraLivro alteraLivro)
         {
-            _context.Livros.Remove(livro);
-            await _context.SaveChangesAsync();
+            var livro = mapper.Map<Livro>(alteraLivro);
+            return mapper.Map<LivroView>(await repository.UpdateLivroAsync(livro));
         }
 
+
+
+
+
+        public async Task DeleteLivroAsync(int id)
+        {
+            await repository.DeleteLivroAsync(id);
+        }    
+
+       
     }
 }
