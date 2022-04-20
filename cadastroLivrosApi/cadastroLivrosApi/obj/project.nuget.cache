@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "6+NkJvAV6F00BOwsquMZt1OLZk2Oarfe7FRmhDiTryZ44dZsm9g02xe+gFIV4qjg+xC4uIHITE+FBgNAIIZVIg==",
+  "dgSpecHash": "Y66IJRYFlsj9J/FyKSp0XVWVD0LCZNGRknGn4NxAMYZpUjDbzoI8GS5mBJoDicZoe8bORWZ0G4fKRADCOD1Zig==",
   "success": true,
-  "projectFilePath": "D:\\LivrariaAlterada\\cadastroLivrosApi\\cadastroLivrosApi\\cadastroLivrosApi.csproj",
+  "projectFilePath": "D:\\Livraria\\cadastroLivrosApi\\cadastroLivrosApi\\cadastroLivrosApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Natal\\.nuget\\packages\\automapper\\11.0.1\\automapper.11.0.1.nupkg.sha512",
     "C:\\Users\\Natal\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",

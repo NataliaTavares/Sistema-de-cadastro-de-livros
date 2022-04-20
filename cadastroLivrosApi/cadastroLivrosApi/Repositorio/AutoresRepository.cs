@@ -19,37 +19,25 @@ namespace cadastroLivrosApi.Repositorio
         public async Task<IEnumerable<Autores>> GetAutoresAsync()
         {
             return await context.Autores
-              //.Include(p => p.Autores)
+              .Include(p => p.Livro)
               .AsNoTracking().ToListAsync();
         }
 
         public async Task<Autores> GetAutorAsync(int id)
         {
             return await context.Autores
-     
+                .Include(p => p.Livro)
                 .AsNoTracking()
                 .SingleOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task<Autores> InsertAutorAsync(Autores autor)
         {
-            //await InsertLivroAutores(autor);
+            
             await context.Autores.AddAsync(autor);
             await context.SaveChangesAsync();
             return autor;
         }
-
-        /*private async Task InsertLivroAutores(Livro livro)
-        {
-            var autoresConsultados = new List<Autores>();
-            foreach (var autor in livro.Autores)
-            {
-                var autoresConsultado = await context.Autores.FindAsync(autor.Id);
-                autoresConsultados.Add(autoresConsultado);
-            }
-            livro.Autores = autoresConsultados;
-        }*/
-
 
 
         public async Task<Autores> DeleteAutorAsync(int id)
@@ -79,20 +67,9 @@ namespace cadastroLivrosApi.Repositorio
                 return null;
             }
             context.Entry(autorConsultado).CurrentValues.SetValues(autor);
-            //await UpdateLivroAutores(autor, autorConsultado);
             await context.SaveChangesAsync();
             return autorConsultado;
         }
-
-        /*private async Task UpdateLivroAutores(Autores autor, Autores autorConsultado)
-        {
-            autorConsultado.Livro.Clear();
-            foreach (var livro in autor.Livro)
-            {
-                var livroConsultado = await context.Livros.FindAsync(livro.Id);
-                autorConsultado.Livro.Add(livroConsultado);
-            }
-        }*/
 
 
     }

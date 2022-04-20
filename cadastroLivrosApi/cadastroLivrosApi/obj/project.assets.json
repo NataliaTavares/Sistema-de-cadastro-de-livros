@@ -6108,11 +6108,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\LivrariaAlterada\\cadastroLivrosApi\\cadastroLivrosApi\\cadastroLivrosApi.csproj",
+      "projectUniqueName": "D:\\Livraria\\cadastroLivrosApi\\cadastroLivrosApi\\cadastroLivrosApi.csproj",
       "projectName": "cadastroLivrosApi",
-      "projectPath": "D:\\LivrariaAlterada\\cadastroLivrosApi\\cadastroLivrosApi\\cadastroLivrosApi.csproj",
+      "projectPath": "D:\\Livraria\\cadastroLivrosApi\\cadastroLivrosApi\\cadastroLivrosApi.csproj",
       "packagesPath": "C:\\Users\\Natal\\.nuget\\packages\\",
-      "outputPath": "D:\\LivrariaAlterada\\cadastroLivrosApi\\cadastroLivrosApi\\obj\\",
+      "outputPath": "D:\\Livraria\\cadastroLivrosApi\\cadastroLivrosApi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -6186,7 +6186,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }

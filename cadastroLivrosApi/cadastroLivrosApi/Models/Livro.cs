@@ -24,7 +24,7 @@ namespace cadastroLivrosApi.Models
         [StringLength(80)]
         public string Genero { get; set; }
 
-
+        [Required]
         public ICollection<Autores> Autores { get; set; }
 
         public Livro()

@@ -51,7 +51,6 @@ D:\Livraria\cadastroLivrosApi\cadastroLivrosApi\obj\Debug\net5.0\cadastroLivrosA
 D:\Livraria\cadastroLivrosApi\cadastroLivrosApi\obj\Debug\net5.0\cadastroLivrosApi.MvcApplicationPartsAssemblyInfo.cs
 D:\Livraria\cadastroLivrosApi\cadastroLivrosApi\obj\Debug\net5.0\cadastroLivrosApi.MvcApplicationPartsAssemblyInfo.cache
 D:\Livraria\cadastroLivrosApi\cadastroLivrosApi\obj\Debug\net5.0\staticwebassets\cadastroLivrosApi.StaticWebAssets.Manifest.cache
-D:\Livraria\cadastroLivrosApi\cadastroLivrosApi\obj\Debug\net5.0\staticwebassets\cadastroLivrosApi.StaticWebAssets.xml
 D:\Livraria\cadastroLivrosApi\cadastroLivrosApi\obj\Debug\net5.0\scopedcss\bundle\cadastroLivrosApi.styles.css
 D:\Livraria\cadastroLivrosApi\cadastroLivrosApi\obj\Debug\net5.0\cadastroLivrosApi.RazorTargetAssemblyInfo.cache
 D:\Livraria\cadastroLivrosApi\cadastroLivrosApi\obj\Debug\net5.0\cadastroLivrosApi.csproj.CopyComplete
@@ -126,3 +125,9 @@ D:\LivrariaAlterada\cadastroLivrosApi\cadastroLivrosApi\bin\Debug\net5.0\Microso
 D:\LivrariaAlterada\cadastroLivrosApi\cadastroLivrosApi\bin\Debug\net5.0\Microsoft.Extensions.Options.dll
 D:\LivrariaAlterada\cadastroLivrosApi\cadastroLivrosApi\bin\Debug\net5.0\Microsoft.Extensions.Primitives.dll
 D:\LivrariaAlterada\cadastroLivrosApi\cadastroLivrosApi\bin\Debug\net5.0\System.Runtime.CompilerServices.Unsafe.dll
+D:\Livraria\cadastroLivrosApi\cadastroLivrosApi\bin\Debug\net5.0\AutoMapper.dll
+D:\Livraria\cadastroLivrosApi\cadastroLivrosApi\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+D:\Livraria\cadastroLivrosApi\cadastroLivrosApi\bin\Debug\net5.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\Livraria\cadastroLivrosApi\cadastroLivrosApi\bin\Debug\net5.0\Microsoft.Extensions.Options.dll
+D:\Livraria\cadastroLivrosApi\cadastroLivrosApi\bin\Debug\net5.0\Microsoft.Extensions.Primitives.dll
+D:\Livraria\cadastroLivrosApi\cadastroLivrosApi\bin\Debug\net5.0\System.Runtime.CompilerServices.Unsafe.dll

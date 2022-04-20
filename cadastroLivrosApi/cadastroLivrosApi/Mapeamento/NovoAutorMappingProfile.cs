@@ -12,9 +12,9 @@ namespace cadastroLivrosApi.Mapeamento
         {
             CreateMap<NovoAutor, Autores>();
             CreateMap<Autores, AutoresView>();
-            //CreateMap<Autores, ReferenciaAutor>().ReverseMap();
-            //CreateMap<Autores, AutoresView>().ReverseMap();
-            //CreateMap<Autores, NovoAutor>().ReverseMap();
+            CreateMap<Livro, ReferenciaLivro>().ReverseMap();
+            CreateMap<Livro, LivroViewNome>().ReverseMap();
+            CreateMap<Livro, NovoLivro>().ReverseMap();
             CreateMap<AlteraAutor, Autores>().ReverseMap();
 
 

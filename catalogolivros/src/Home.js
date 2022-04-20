@@ -13,11 +13,13 @@ import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import logoLivros from "./assets/livros.jpg";
 
 const Home = () => {
-    var moment = require("moment"); //
+    var moment = require("moment");
 
     const baseUrl = "https://localhost:44313/api/Livros";
+    const baseUrlAutores = "https://localhost:44313/api/Autores";
 
     const [data, setData] = useState([]);
+    const [autoresData, setAutoresData] = useState([]);
     const [updateData, setUpdateData] = useState(true);
 
     const [modalIncluir, setModalIncluir] = useState(false);
@@ -27,7 +29,7 @@ const Home = () => {
     const [livroSelecionado, setLivroSelecionado] = useState({
         id: "",
         nome: "",
-        autor: "",
+        autores: { id: "" },
         data: "",
         genero: "",
     });
@@ -57,11 +59,31 @@ const Home = () => {
         console.log(livroSelecionado);
     };
 
+    const handleChangeAutor = (e) => {
+        const { name, value } = e.target;
+        setLivroSelecionado({
+            ...livroSelecionado,
+            [name]: [{ ["id"]: value }],
+        });
+        console.log(livroSelecionado);
+    };
+
     const pedidoGet = async () => {
         await axios
             .get(baseUrl)
             .then((response) => {
                 setData(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    const autoresGet = async () => {
+        await axios
+            .get(baseUrlAutores)
+            .then((response) => {
+                setAutoresData(response.data);
             })
             .catch((error) => {
                 console.log(error);
@@ -99,7 +121,7 @@ const Home = () => {
                 dadosAuxiliar.map((livro) => {
                     if (livro.id === livroSelecionado.id) {
                         livro.nome = resposta.nome;
-                        livro.autor = resposta.autor;
+                        livro.autores = resposta.autores;
                         livro.data = dataAmericana;
                         livro.genero = resposta.genero;
                     }
@@ -125,9 +147,20 @@ const Home = () => {
             });
     };
 
+    function verNomeAutor() {
+        let aux = "";
+
+        Object.keys(livroSelecionado.autores).map(function (key) {
+            aux = livroSelecionado.autores[key];
+        });
+        let nomeAutor = aux["nome"];
+        return nomeAutor;
+    }
+
     useEffect(() => {
         if (updateData) {
             pedidoGet();
+            autoresGet();
             setUpdateData(false);
         }
     }, [updateData]);
@@ -184,7 +217,8 @@ const Home = () => {
                         <tr key={livro.id}>
                             <td>{livro.id}</td>
                             <td>{livro.nome}</td>
-                            <td>{livro.autor}</td>
+                            {/* <td>{livro.autores.nome}</td> */}
+                            <td>{livro.autores.map((t) => t.nome).join()}</td>
 
                             <td>{moment(livro.data).format("DD/MM/YYYY")}</td>
                             <td>{livro.genero}</td>
@@ -227,13 +261,19 @@ const Home = () => {
                         <br />
                         <label>Autor: </label>
                         <br />
-                        <input
-                            type="text"
-                            className="form-control"
-                            name="autor"
-                            onChange={handleChange}
-                        />
+
+                        <select
+                            name="autores"
+                            id="autores"
+                            onChange={handleChangeAutor}
+                        >
+                            <option></option>
+                            {autoresData.map((t) => (
+                                <option value={t.id}>{t.nome}</option>
+                            ))}
+                        </select>
                         <br />
+
                         <label>Data Publicação: </label>
                         <br />
                         <input
@@ -285,21 +325,7 @@ const Home = () => {
                             value={livroSelecionado && livroSelecionado.id}
                         />
                         <br />
-                        <label>Data Publicação: </label>
-                        <br />
-                        <input
-                            type="text"
-                            className="form-control"
-                            name="data"
-                            onChange={handleChange}
-                            // readOnly
-                            // value={livroSelecionado && livroSelecionado.data}
-                            value={
-                                livroSelecionado &&
-                                ConvertDataAmericana(livroSelecionado.data)
-                            }
-                        />
-                        <br />
+
                         <label>Nome:</label>
                         <br />
                         <input
@@ -312,15 +338,30 @@ const Home = () => {
                         <br />
                         <label>Autor: </label>
                         <br />
+                        <select
+                            name="autores"
+                            id="autores"
+                            onChange={handleChangeAutor}
+                        >
+                            <option selected>{verNomeAutor()}</option>
+                            {autoresData.map((t) => (
+                                <option value={t.id}>{t.nome}</option>
+                            ))}
+                        </select>
+                        <br />
+                        <label>Data Publicação: </label>
+                        <br />
                         <input
                             type="text"
                             className="form-control"
-                            name="autor"
+                            name="data"
                             onChange={handleChange}
-                            value={livroSelecionado && livroSelecionado.autor}
+                            value={
+                                livroSelecionado &&
+                                ConvertDataAmericana(livroSelecionado.data)
+                            }
                         />
                         <br />
-
                         <label>Genero:</label>
                         <br />
                         <input

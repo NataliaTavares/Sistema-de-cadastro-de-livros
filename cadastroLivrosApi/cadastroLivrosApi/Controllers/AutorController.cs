@@ -81,7 +81,7 @@ namespace cadastroLivrosApi.Controllers
         /// <summary>
         /// Altera um autor
         /// </summary>
-        [HttpPut]
+        [HttpPut("{id:int}")]
         [ProducesResponseType(typeof(AutoresView), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
