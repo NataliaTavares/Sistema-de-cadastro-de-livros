@@ -21,8 +21,7 @@ namespace cadastroLivrosApi.Models
         public DateTime Data { get; set; }
 
         [Required]
-        [StringLength(80)]
-        public string Genero { get; set; }
+        public ICollection<Generos> Genero { get; set; }
 
         [Required]
         public ICollection<Autores> Autores { get; set; }

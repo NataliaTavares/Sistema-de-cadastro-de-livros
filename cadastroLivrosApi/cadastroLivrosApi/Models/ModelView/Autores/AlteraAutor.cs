@@ -1,6 +1,4 @@
-﻿using cadastroLivrosApi.Models.ModelView.Autores;
-
-namespace cadastroLivrosApi.Models.ModelView.Livro
+﻿namespace cadastroLivrosApi.Models.ModelView.Autores
 {
     public class AlteraAutor : NovoAutor
     {

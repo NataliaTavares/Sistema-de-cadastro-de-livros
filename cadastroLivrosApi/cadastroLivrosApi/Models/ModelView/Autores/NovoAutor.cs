@@ -1,7 +1,4 @@
-﻿using cadastroLivrosApi.Models.ModelView.Livro;
-using System.Collections.Generic;
-
-namespace cadastroLivrosApi.Models.ModelView.Autores
+﻿namespace cadastroLivrosApi.Models.ModelView.Autores
 {
     public class NovoAutor
     {

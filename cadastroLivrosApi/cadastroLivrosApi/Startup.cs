@@ -41,6 +41,8 @@ namespace cadastroLivrosApi
             services.AddScoped<ILivroRepository, LivroRepository>();
             services.AddScoped<IAutoresService, AutoresService>();
             services.AddScoped<IAutoresRepository, AutoresRepository>();
+            services.AddScoped<IGenerosService, GenerosService>();
+            services.AddScoped<IGenerosRepository, GenerosRepository>();
 
 
             services.AddSwaggerGen(c =>

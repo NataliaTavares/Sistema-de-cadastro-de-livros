@@ -2,6 +2,7 @@
 using cadastroLivrosApi.Models;
 using cadastroLivrosApi.Services;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -21,6 +22,7 @@ namespace cadastroLivrosApi.Repositorio
         {
             return await context.Livros
               .Include(p => p.Autores)
+              .Include(p => p.Genero)
               .AsNoTracking().ToListAsync();
         }
 
@@ -28,6 +30,7 @@ namespace cadastroLivrosApi.Repositorio
         {
             return await context.Livros
                 .Include(p => p.Autores)
+                .Include(p => p.Genero)
                 .AsNoTracking()
                 .SingleOrDefaultAsync(p => p.Id == id);
         }
@@ -35,9 +38,21 @@ namespace cadastroLivrosApi.Repositorio
         public async Task<Livro> InsertLivroAsync(Livro livro)
         {
             await InsertLivroAutores(livro);
+            await InsertLivroGenero(livro);
             await context.Livros.AddAsync(livro);
             await context.SaveChangesAsync();
             return livro;
+        }
+
+        private async Task InsertLivroGenero(Livro livro)
+        {
+            var generosConsultados = new List<Generos>();
+            foreach (var genero in livro.Genero)
+            {
+                var generosConsultado = await context.Generos.FindAsync(genero.Id);
+                generosConsultados.Add(generosConsultado);
+            }
+            livro.Genero = generosConsultados;
         }
 
         private async Task InsertLivroAutores(Livro livro)
@@ -55,6 +70,7 @@ namespace cadastroLivrosApi.Repositorio
         {
             var livroConsultado = await context.Livros
                                     .Include(p => p.Autores)
+                                    .Include(p => p.Genero)
                                     .SingleOrDefaultAsync(p => p.Id == livro.Id);
             if (livroConsultado == null)
             {
@@ -62,8 +78,19 @@ namespace cadastroLivrosApi.Repositorio
             }
             context.Entry(livroConsultado).CurrentValues.SetValues(livro);
             await UpdateLivroAutores(livro, livroConsultado);
+            await UpdateLivroGenero(livro, livroConsultado);
             await context.SaveChangesAsync();
             return livroConsultado;
+        }
+
+        private async Task UpdateLivroGenero(Livro livro, Livro livroConsultado)
+        {
+            livroConsultado.Genero.Clear();
+            foreach (var genero in livro.Genero)
+            {
+                var generoConsultado = await context.Generos.FindAsync(genero.Id);
+                livroConsultado.Genero.Add(generoConsultado);
+            }
         }
 
         private async Task UpdateLivroAutores(Livro livro, Livro livroConsultado)

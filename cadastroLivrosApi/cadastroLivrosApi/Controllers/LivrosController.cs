@@ -65,9 +65,9 @@ namespace cadastroLivrosApi.Controllers
         /// Altera um livro
         /// </summary>
         [HttpPut("{id:int}")]
-        //[ProducesResponseType(typeof(LivroView), StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //[ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(LivroView), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Put(AlteraLivro livro)
         {
             var livroAtualizado = await manager.UpdateLivroAsync(livro);

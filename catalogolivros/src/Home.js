@@ -31,7 +31,7 @@ const Home = () => {
         nome: "",
         autores: { id: "" },
         data: "",
-        genero: "",
+        genero: { id: "" },
     });
 
     const selecionarLivro = (livro, opcao) => {
@@ -221,7 +221,8 @@ const Home = () => {
                             <td>{livro.autores.map((t) => t.nome).join()}</td>
 
                             <td>{moment(livro.data).format("DD/MM/YYYY")}</td>
-                            <td>{livro.genero}</td>
+                            <td>{livro.genero.map((t) => t.nome).join()}</td>
+                            {/* <td>{livro.genero}</td> */}
                             <td>
                                 <button
                                     className="btn btn-primary"

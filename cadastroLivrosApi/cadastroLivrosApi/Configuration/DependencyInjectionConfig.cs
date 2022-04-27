@@ -13,6 +13,7 @@ namespace cadastroLivrosApi.Configuration
             services.AddScoped<ILivroRepository, LivroRepository>();
             services.AddScoped<ILivrosService, LivrosService>();
             services.AddScoped<IAutoresRepository, AutoresRepository>();
+            services.AddScoped<IGenerosRepository, GenerosRepository>();
 
         }
 

@@ -1,0 +1,77 @@
+﻿using cadastroLivrosApi.Contextos;
+using cadastroLivrosApi.Models;
+using cadastroLivrosApi.Services;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace cadastroLivrosApi.Repositorio
+{
+    public class GenerosRepository : IGenerosRepository
+    {
+        private readonly AppDbContexto context;
+
+        public GenerosRepository(AppDbContexto context)
+        {
+            this.context = context;
+        }
+
+        public async Task<IEnumerable<Generos>> GetGenerosAsync()
+        {
+            return await context.Generos
+              .Include(p => p.Livro)
+              .AsNoTracking().ToListAsync();
+        }
+
+        public async Task<Generos> GetGeneroAsync(int id)
+        {
+            return await context.Generos
+                .Include(p => p.Livro)
+                .AsNoTracking()
+                .SingleOrDefaultAsync(p => p.Id == id);
+        }
+
+        public async Task<Generos> InsertGeneroAsync(Generos genero)
+        {
+            
+            await context.Generos.AddAsync(genero);
+            await context.SaveChangesAsync();
+            return genero;
+        }
+
+
+        public async Task<Generos> DeleteGeneroAsync(int id)
+        {
+            var generoConsultado = await context.Generos.FindAsync(id);
+            if (generoConsultado == null)
+            {
+                return null;
+            }
+            var generoRemovido = context.Generos.Remove(generoConsultado);
+            await context.SaveChangesAsync();
+            return generoRemovido.Entity;
+        }
+
+        public async Task<bool> ExisteAsync(int id)
+        {
+            return await context.Generos.AnyAsync(p => p.Id == id);
+        }
+
+        public async Task<Generos> UpdateGeneroAsync(Generos genero)
+        {
+            var generoConsultado = await context.Generos
+                                    //.Include(p => p.Generos)
+                                    .SingleOrDefaultAsync(p => p.Id == genero.Id);
+            if (generoConsultado == null)
+            {
+                return null;
+            }
+            context.Entry(generoConsultado).CurrentValues.SetValues(genero);
+            await context.SaveChangesAsync();
+            return generoConsultado;
+        }
+
+
+    }
+}
+

@@ -1,21 +1,22 @@
 ﻿using AutoMapper;
 using cadastroLivrosApi.Models;
 using cadastroLivrosApi.Models.ModelView.Autores;
+using cadastroLivrosApi.Models.ModelView.Generos;
 using cadastroLivrosApi.Models.ModelView.Livro;
 
 
 namespace cadastroLivrosApi.Mapeamento
 {
-    public class NovoAutorMappingProfile : Profile
+    public class NovoGeneroMappingProfile : Profile
     {
-        public NovoAutorMappingProfile()
+        public NovoGeneroMappingProfile()
         {
-            CreateMap<NovoAutor, Autores>();
-            CreateMap<Autores, AutorView>();
+            CreateMap<NovoGenero, Generos>();
+            CreateMap<Generos, GeneroView>();
             CreateMap<Livro, ReferenciaLivro>().ReverseMap();
             CreateMap<Livro, LivroViewNome>().ReverseMap();
             CreateMap<Livro, NovoLivro>().ReverseMap();
-            CreateMap<AlteraAutor, Autores>().ReverseMap();
+            CreateMap<AlteraGenero, Generos>().ReverseMap();
 
 
 

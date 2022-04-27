@@ -9,13 +9,13 @@ namespace cadastroLivrosApi.Services
     {
         Task DeleteAutorAsync(int id);
 
-        Task<AutoresView> GetAutorAsync(int id);
+        Task<AutorView> GetAutorAsync(int id);
 
-        Task<IEnumerable<AutoresView>> GetAutoresAsync();
+        Task<IEnumerable<AutorView>> GetAutoresAsync();
 
-        Task<AutoresView> InsertAutorAsync(NovoAutor novoAutor);
+        Task<AutorView> InsertAutorAsync(NovoAutor novoAutor);
 
-        Task<AutoresView> UpdateAutorAsync(AlteraAutor alteraAutor);
+        Task<AutorView> UpdateAutorAsync(AlteraAutor alteraAutor);
 
     }
 }

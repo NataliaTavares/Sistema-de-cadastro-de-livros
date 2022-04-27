@@ -1,9 +1,9 @@
 ﻿using cadastroLivrosApi.Models.ModelView.Livro;
 using System.Collections.Generic;
 
-namespace cadastroLivrosApi.Models.ModelView.Autores
+namespace cadastroLivrosApi.Models.ModelView.Generos
 {
-    public class AutoresView
+    public class GeneroView
     {
         public int Id { get; set; }
         public string Nome { get; set; }

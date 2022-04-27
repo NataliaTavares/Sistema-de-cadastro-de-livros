@@ -20,20 +20,20 @@ namespace cadastroLivrosApi.Services
             this.mapper = mapper;
         }
 
-        public async Task<IEnumerable<AutoresView>> GetAutoresAsync()
+        public async Task<IEnumerable<AutorView>> GetAutoresAsync()
         {
-            return mapper.Map<IEnumerable<Autores>, IEnumerable<AutoresView>>(await repository.GetAutoresAsync());
+            return mapper.Map<IEnumerable<Autores>, IEnumerable<AutorView>>(await repository.GetAutoresAsync());
         }
 
-        public async Task<AutoresView> GetAutorAsync(int id)
+        public async Task<AutorView> GetAutorAsync(int id)
         {
-            return mapper.Map<AutoresView>(await repository.GetAutorAsync(id));
+            return mapper.Map<AutorView>(await repository.GetAutorAsync(id));
         }
 
-        public async Task<AutoresView> InsertAutorAsync(NovoAutor novoAutor)
+        public async Task<AutorView> InsertAutorAsync(NovoAutor novoAutor)
         {
             var autor = mapper.Map<Autores>(novoAutor);
-            return mapper.Map<AutoresView>(await repository.InsertAutorAsync(autor));
+            return mapper.Map<AutorView>(await repository.InsertAutorAsync(autor));
         }
 
         public async Task DeleteAutorAsync(int id)
@@ -41,10 +41,10 @@ namespace cadastroLivrosApi.Services
             await repository.DeleteAutorAsync(id);
         }
 
-        public async Task<AutoresView> UpdateAutorAsync(AlteraAutor alteraAutor)
+        public async Task<AutorView> UpdateAutorAsync(AlteraAutor alteraAutor)
         {
             var autor = mapper.Map<Autores>(alteraAutor);
-            return mapper.Map<AutoresView>(await repository.UpdateAutorAsync(autor));
+            return mapper.Map<AutorView>(await repository.UpdateAutorAsync(autor));
         }
     }
 }

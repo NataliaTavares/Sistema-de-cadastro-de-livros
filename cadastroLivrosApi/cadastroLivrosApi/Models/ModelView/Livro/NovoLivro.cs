@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using cadastroLivrosApi.Models.ModelView.Autores;
+using cadastroLivrosApi.Models.ModelView.Generos;
 
 namespace cadastroLivrosApi.Models.ModelView.Livro
 {
@@ -15,8 +16,7 @@ namespace cadastroLivrosApi.Models.ModelView.Livro
         public DateTime Data { get; set; }
 
 
-        [StringLength(80)]
-        public string Genero { get; set; }
+        public ICollection<ReferenciaGenero> Genero { get; set; }
 
 
         public ICollection<ReferenciaAutor> Autores { get; set; }
