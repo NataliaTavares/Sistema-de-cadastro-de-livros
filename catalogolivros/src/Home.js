@@ -1,4 +1,3 @@
-import { Route, BrowserRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import React, { useState, useEffect } from "react";
@@ -17,9 +16,11 @@ const Home = () => {
 
     const baseUrl = "https://localhost:44313/api/Livros";
     const baseUrlAutores = "https://localhost:44313/api/Autores";
+    const baseUrlGeneros = "https://localhost:44313/api/Generos";
 
     const [data, setData] = useState([]);
     const [autoresData, setAutoresData] = useState([]);
+    const [generosData, setGenerosData] = useState([]);
     const [updateData, setUpdateData] = useState(true);
 
     const [modalIncluir, setModalIncluir] = useState(false);
@@ -59,7 +60,7 @@ const Home = () => {
         console.log(livroSelecionado);
     };
 
-    const handleChangeAutor = (e) => {
+    const handleChangeOption = (e) => {
         const { name, value } = e.target;
         setLivroSelecionado({
             ...livroSelecionado,
@@ -84,6 +85,17 @@ const Home = () => {
             .get(baseUrlAutores)
             .then((response) => {
                 setAutoresData(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    const generosGet = async () => {
+        await axios
+            .get(baseUrlGeneros)
+            .then((response) => {
+                setGenerosData(response.data);
             })
             .catch((error) => {
                 console.log(error);
@@ -157,10 +169,21 @@ const Home = () => {
         return nomeAutor;
     }
 
+    function verNomeGenero() {
+        let aux = "";
+
+        Object.keys(livroSelecionado.genero).map(function (key) {
+            aux = livroSelecionado.genero[key];
+        });
+        let nomeGenero = aux["nome"];
+        return nomeGenero;
+    }
+
     useEffect(() => {
         if (updateData) {
             pedidoGet();
             autoresGet();
+            generosGet();
             setUpdateData(false);
         }
     }, [updateData]);
@@ -266,7 +289,7 @@ const Home = () => {
                         <select
                             name="autores"
                             id="autores"
-                            onChange={handleChangeAutor}
+                            onChange={handleChangeOption}
                         >
                             <option></option>
                             {autoresData.map((t) => (
@@ -286,12 +309,16 @@ const Home = () => {
                         <br />
                         <label>Genero:</label>
                         <br />
-                        <input
-                            type="text"
-                            className="form-control"
-                            name="genero"
-                            onChange={handleChange}
-                        />
+                        <select
+                            name="autores"
+                            id="autores"
+                            onChange={handleChangeOption}
+                        >
+                            <option></option>
+                            {generosData.map((t) => (
+                                <option value={t.id}>{t.nome}</option>
+                            ))}
+                        </select>
                         <br />
                     </div>
                 </ModalBody>
@@ -342,7 +369,7 @@ const Home = () => {
                         <select
                             name="autores"
                             id="autores"
-                            onChange={handleChangeAutor}
+                            onChange={handleChangeOption}
                         >
                             <option selected>{verNomeAutor()}</option>
                             {autoresData.map((t) => (
@@ -365,13 +392,16 @@ const Home = () => {
                         <br />
                         <label>Genero:</label>
                         <br />
-                        <input
-                            type="text"
-                            className="form-control"
+                        <select
                             name="genero"
-                            onChange={handleChange}
-                            value={livroSelecionado && livroSelecionado.genero}
-                        />
+                            id="genero"
+                            onChange={handleChangeOption}
+                        >
+                            <option selected>{verNomeGenero()}</option>
+                            {generosData.map((t) => (
+                                <option value={t.id}>{t.nome}</option>
+                            ))}
+                        </select>
                         <br />
                     </div>
                 </ModalBody>

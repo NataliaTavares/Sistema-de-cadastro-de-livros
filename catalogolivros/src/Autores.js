@@ -1,4 +1,3 @@
-import { Route, BrowserRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import React, { useState, useEffect } from "react";
