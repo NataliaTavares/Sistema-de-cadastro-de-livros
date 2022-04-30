@@ -200,26 +200,31 @@ const Home = () => {
     }
 
     return (
-        <div className="livro-container">
+        <div className="container">
             <br />
-            <h3>Cadastro de livros</h3>
+            <h1>Cadastro de livros</h1>
             <header>
-                <img src={logoLivros} alt="Livros" width="100" height="100" />
                 <button
                     className="btn btn-success"
                     onClick={() => abrirFecharModalIncluir()}
                 >
                     Incluir Novo Livro
                 </button>
+                <img src={logoLivros} alt="Livros" />
             </header>
 
             <nav>
                 <ul>
                     <li>
-                        <Link to="/autores">Autores</Link>
+                        <Link className="menu" to="/autores">
+                            Autores
+                        </Link>
                     </li>
+                    <br />
                     <li>
-                        <Link to="/generos">Generos</Link>
+                        <Link className="menu" to="/generos">
+                            Generos
+                        </Link>
                     </li>
                 </ul>
             </nav>
@@ -240,15 +245,13 @@ const Home = () => {
                         <tr key={livro.id}>
                             <td>{livro.id}</td>
                             <td>{livro.nome}</td>
-                            {/* <td>{livro.autores.nome}</td> */}
                             <td>{livro.autores.map((t) => t.nome).join()}</td>
 
                             <td>{moment(livro.data).format("DD/MM/YYYY")}</td>
                             <td>{livro.genero.map((t) => t.nome).join()}</td>
-                            {/* <td>{livro.genero}</td> */}
                             <td>
                                 <button
-                                    className="btn btn-primary"
+                                    className="btn btn-warning"
                                     onClick={() =>
                                         selecionarLivro(livro, "Editar")
                                     }
@@ -310,8 +313,8 @@ const Home = () => {
                         <label>Genero:</label>
                         <br />
                         <select
-                            name="autores"
-                            id="autores"
+                            name="genero"
+                            id="genero"
                             onChange={handleChangeOption}
                         >
                             <option></option>

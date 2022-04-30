@@ -113,9 +113,12 @@ const Generos = () => {
         }
     }, [updateData]);
     return (
-        <div>
+        <div className="container">
             <h1>Generos</h1>
-            <Link to="/">retornar a página inicial</Link>
+            <Link className="menu" to="/">
+                retornar a página inicial
+            </Link>
+            <br />
             <br />
             <button
                 className="btn btn-success"
@@ -124,7 +127,8 @@ const Generos = () => {
                 Incluir Novo genero
             </button>
             <br />
-            <table className="table table-bordered">
+            <br />
+            <table className="table table-bordered ">
                 <thead>
                     <tr>
                         <th>Id</th>
@@ -134,7 +138,7 @@ const Generos = () => {
                 </thead>
                 <tbody>
                     {data.map((genero) => (
-                        <tr key={genero.id}>
+                        <tr className="borderTable" key={genero.id}>
                             <td>{genero.id}</td>
                             <td>{genero.nome}</td>
                             <td>
@@ -146,7 +150,7 @@ const Generos = () => {
                             </td>
                             <td>
                                 <button
-                                    className="btn btn-primary"
+                                    className="btn btn-warning"
                                     onClick={() =>
                                         selecionarGenero(genero, "Editar")
                                     }

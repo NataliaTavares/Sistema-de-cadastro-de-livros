@@ -114,9 +114,12 @@ const Autores = () => {
     }, [updateData]);
 
     return (
-        <div>
+        <div className="container">
             <h1>Autores</h1>
-            <Link to="/">retornar a página inicial</Link>
+            <Link className="menu" to="/">
+                retornar a página inicial
+            </Link>
+            <br />
             <br />
             <button
                 className="btn btn-success"
@@ -124,6 +127,7 @@ const Autores = () => {
             >
                 Incluir Novo Autor
             </button>
+            <br />
             <br />
             <table className="table table-bordered">
                 <thead>
@@ -135,7 +139,7 @@ const Autores = () => {
                 </thead>
                 <tbody>
                     {data.map((autor) => (
-                        <tr key={autor.id}>
+                        <tr className="borderTable" key={autor.id}>
                             <td>{autor.id}</td>
                             <td>{autor.nome}</td>
                             <td>
@@ -147,7 +151,7 @@ const Autores = () => {
                             </td>
                             <td>
                                 <button
-                                    className="btn btn-primary"
+                                    className="btn btn-warning"
                                     onClick={() =>
                                         selecionarAutor(autor, "Editar")
                                     }

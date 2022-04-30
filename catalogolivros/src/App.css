@@ -1,20 +1,26 @@
-.livro-container {
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@1,500&display=swap");
+
+.container {
     width: 100%;
     max-width: 1200px;
     padding: 5 10px;
     margin: 30px auto;
+    font-family: "Raleway", sans-serif;
+    background-color: #dcdce6;
 }
 
-.livro-container header {
+.container header {
     display: flex;
     align-items: center;
 }
 
-.livro-container header img {
-    height: 50px;
+.container header img {
+    margin-left: 50px;
+    height: 150px;
+    width: 800px;
 }
 
-.livro-container header button {
+.container header button {
     height: 50px;
     width: 200px;
     border-radius: 5px;
@@ -24,17 +30,36 @@
     transition: border-color 0.5s;
 }
 
-.livro-container header button:hover {
+.container header button:hover {
     border-color: #510bac;
+}
+
+nav li {
+    list-style-type: none;
+}
+
+.menu {
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.menu:hover {
+    color: red;
 }
 
 table,
 th,
 td {
-    border: 1px solid black;
     margin-top: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
-    padding: 20px;
     text-align: left;
+}
+
+table th {
+    width: 15%;
+}
+
+.borderTable {
+    border-bottom: 1rem solid black;
 }
